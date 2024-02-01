@@ -1,4 +1,6 @@
 # File: lib/diary_entry.py
+import math
+
 
 class DiaryEntry:
     # Public Properties:
@@ -8,12 +10,16 @@ class DiaryEntry:
     def __init__(self, title, contents): # title, contents are strings
         # Side-effects:
         #   Sets the title and contents properties
-        pass
-
+        self.title = title
+        self.contents = contents
+        #         self.check_total = 0
+        #         self.check_pass = 0
+        
     def count_words(self):
         # Returns:
         #   An integer representing the number of words in the contents
-        pass
+        result = self.contents.split()
+        return len(result)
 
     def reading_time(self, wpm):
         # Parameters:
@@ -22,7 +28,10 @@ class DiaryEntry:
         # Returns:
         #   An integer representing an estimate of the reading time in minutes
         #   for the contents at the given wpm.
-        pass
+        string_words = self.contents.split()
+        result = (len(string_words) / wpm)
+        final_result = math.ceil(result)
+        return final_result
 
     def reading_chunk(self, wpm, minutes):
         # Parameters:
@@ -36,4 +45,6 @@ class DiaryEntry:
         # If called again, `reading_chunk` should return the next chunk,
         # skipping what has already been read, until the contents is fully read.
         # The next call after that it should restart from the beginning.
-        pass
+        total_chars = wpm * minutes
+        new_string = self.contents[:total_chars]
+        return new_string
